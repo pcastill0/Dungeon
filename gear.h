@@ -3,8 +3,7 @@
 #include<string>
 #include <cstdlib>
 
-struct Gear
-{
+struct Gear {
 	std::string name;
 	int gold;
 	int healt;

@@ -131,6 +131,7 @@
     <ClCompile Include="enemies.cpp" />
     <ClCompile Include="gear.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainManager.cpp" />
     <ClCompile Include="mapPositions.cpp" />
     <ClCompile Include="players.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="chests.h" />
     <ClInclude Include="enemies.h" />
     <ClInclude Include="gear.h" />
+    <ClInclude Include="mainManager.h" />
     <ClInclude Include="mapPositions.h" />
     <ClInclude Include="players.h" />
   </ItemGroup>

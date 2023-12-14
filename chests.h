@@ -5,8 +5,7 @@
 #include "mapPositions.h"
 #include "gear.h"
 
-struct Chest
-{
+struct Chest {
 	MapPosition mapPosition;
 	int gold;
 	bool isLooted;

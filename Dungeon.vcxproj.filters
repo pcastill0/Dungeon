@@ -33,6 +33,9 @@
     <ClCompile Include="gear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mainManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="players.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

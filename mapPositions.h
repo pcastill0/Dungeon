@@ -3,8 +3,7 @@
 #include<string>
 #include <cstdlib>
 
-struct MapPosition
-{
+struct MapPosition {
 	int x; 
 	int y;
 
