@@ -36,12 +36,10 @@ int main() {
 	} while (!mn->gameFinished);
 
 	
-	void Combat(MainManager * mn);
-	void Chest(MainManager * mn);
-	void GameOver(MainManager * mn);
+	
 
 }void Dungeon(MainManager * mn,Player* player){
-
+		char respuesta;
 		std::cout << "------ DUNGEON ------" << std::endl;
 
 		std::cout << "E -> Enemy   P -> Player   C -> Chest" << std::endl;
@@ -76,7 +74,18 @@ int main() {
 		std::cout << " " << std::endl;
 		std::cout << "P -> Potion" << std::endl;
 
+		std::cout << "Enter your action: " << std::endl;
+		std::cin >> respuesta;
+		system("pause");
 
+		if (respuesta == 'W'  )
+		{
+
+		}
 
 
 	};
+	
+	void Combat(MainManager * mn);
+	void Chest(MainManager * mn);
+	void GameOver(MainManager * mn);
