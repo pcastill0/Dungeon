@@ -16,4 +16,5 @@ void MainManager::Spawn() {
 		e->Spawn(player, enemies);
 		enemies.push_back(e);
 	}
+	
 }

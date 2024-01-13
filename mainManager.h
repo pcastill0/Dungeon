@@ -19,4 +19,7 @@ struct MainManager {
 	void Spawn();
 
 	void MoveEnemies();
+	
 };
+
+
