@@ -6,7 +6,7 @@
 #include "mainManager.h"
 #include <time.h>
 
-void Dungeon(MainManager* mn,Player* player, Enemy* e);
+void Dungeon(MainManager* mn,Player* player);
 void Combat(MainManager* mn);
 void Chest(MainManager* mn);
 void GameOver(MainManager* mn);
@@ -21,7 +21,7 @@ int main() {
 		switch (mn->currentScene)
 		{
 		case DUNGEON:
-			Dungeon(mn,mn->player,);
+			Dungeon(mn,mn->player);
 			break;
 		case COMBAT:
 			break;
@@ -38,7 +38,7 @@ int main() {
 	
 	
 
-}void Dungeon(MainManager * mn,Player* player, Enemy* e){
+}void Dungeon(MainManager * mn,Player* player){
 		
 		char respuesta;
 		std::cout << "------ DUNGEON ------" << std::endl;
@@ -77,31 +77,48 @@ int main() {
 
 		std::cout << "Enter your action: " << std::endl;
 		std::cin >> respuesta;
-		system("pause");
+		std::cout << std::endl;
 
-		if (respuesta == 'W' || respuesta == 'A' || respuesta == 'S'|| respuesta == 'D')
-		{
-			if (mn->mapPosition)
-			{
-
+		if (respuesta == 'W' || respuesta == 'w') {
+			if (player->agility > 0 && player->mapPosition->y > 0) {
+				player->mapPosition->y--;
 			}
 		}
-		else if (respuesta == 'P' && player->agility < 0)
-		{
-			if (player->potions < 0)
-			{
+		else if (respuesta == 'A' || respuesta == 'a') {
+			if (player->agility > 0 && player->mapPosition->x > 0) {
+				player->mapPosition->x--;
+			}
+		}
+		else if (respuesta == 'S' || respuesta == 's') {
+			if (player->agility > 0 && player->mapPosition->y < 4) {
+				player->mapPosition->y++;
+			}
+		}
+		else if (respuesta == 'D' || respuesta == 'd') {
+			if (player->agility > 0 && player->mapPosition->x < 4) {
+				player->mapPosition->x++;
+			}
+		}
+		else if (respuesta == 'P' || respuesta == 'p') {
+			if (player->agility < 0 && player->potions > 0) {
 				player->potions--;
-				player->maxHealth
+				player->health += 0.4f * player->maxHealth;
+				if (player->health > player->maxHealth) {
+					player->health = player->maxHealth;
+				}
 			}
-			
-
+			else {
+				
+			}
 		}
-		{
-
+		else {
+			std::cout << "This action is not valid, please try again.";
 		}
+
+		
 
 	};
 	
 	void Combat(MainManager * mn);
-	void Chest(MainManager * mn);
-	void GameOver(MainManager * mn);
+	void Chest(MainManager* mn);
+	void GameOver(MainManager* mn);
