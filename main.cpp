@@ -6,7 +6,7 @@
 #include "mainManager.h"
 #include <time.h>
 
-void Dungeon(MainManager* mn,Player* player);
+void Dungeon(MainManager* mn,Player* player, Enemy* e);
 void Combat(MainManager* mn);
 void Chest(MainManager* mn);
 void GameOver(MainManager* mn);
@@ -21,7 +21,7 @@ int main() {
 		switch (mn->currentScene)
 		{
 		case DUNGEON:
-			Dungeon(mn,mn->player);
+			Dungeon(mn,mn->player,);
 			break;
 		case COMBAT:
 			break;
@@ -38,7 +38,8 @@ int main() {
 	
 	
 
-}void Dungeon(MainManager * mn,Player* player){
+}void Dungeon(MainManager * mn,Player* player, Enemy* e){
+		
 		char respuesta;
 		std::cout << "------ DUNGEON ------" << std::endl;
 
@@ -78,11 +79,26 @@ int main() {
 		std::cin >> respuesta;
 		system("pause");
 
-		if (respuesta == 'W'  )
+		if (respuesta == 'W' || respuesta == 'A' || respuesta == 'S'|| respuesta == 'D')
+		{
+			if (mn->mapPosition)
+			{
+
+			}
+		}
+		else if (respuesta == 'P' && player->agility < 0)
+		{
+			if (player->potions < 0)
+			{
+				player->potions--;
+				player->maxHealth
+			}
+			
+
+		}
 		{
 
 		}
-
 
 	};
 	
