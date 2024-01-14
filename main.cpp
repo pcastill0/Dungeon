@@ -78,25 +78,33 @@ int main() {
 		std::cout << "Enter your action: " << std::endl;
 		std::cin >> respuesta;
 		std::cout << std::endl;
-
-		if (respuesta == 'W' || respuesta == 'w') {
-			if (player->agility > 0 && player->mapPosition->y > 0) {
-				player->mapPosition->y--;
+		if (player->agility = 0)
+		{
+			mn->MoveEnemies();
+			player->agility = player->maxAgility;
+		}
+		else if (respuesta == 'W' || respuesta == 'w') {
+			if (player->agility > 0 && player->mapPosition.y > 0) {
+				player->mapPosition.y--;
+				player->agility--;
 			}
 		}
 		else if (respuesta == 'A' || respuesta == 'a') {
-			if (player->agility > 0 && player->mapPosition->x > 0) {
-				player->mapPosition->x--;
+			if (player->agility > 0 && player->mapPosition.x > 0) {
+				player->mapPosition.x--;
+				player->agility--;
 			}
 		}
 		else if (respuesta == 'S' || respuesta == 's') {
-			if (player->agility > 0 && player->mapPosition->y < 4) {
-				player->mapPosition->y++;
+			if (player->agility > 0 && player->mapPosition.y < 4) {
+				player->mapPosition.y++;
+				player->agility--;
 			}
 		}
 		else if (respuesta == 'D' || respuesta == 'd') {
-			if (player->agility > 0 && player->mapPosition->x < 4) {
-				player->mapPosition->x++;
+			if (player->agility > 0 && player->mapPosition.x < 4) {
+				player->mapPosition.x++;
+				player->agility--;
 			}
 		}
 		else if (respuesta == 'P' || respuesta == 'p') {
@@ -106,10 +114,14 @@ int main() {
 				if (player->health > player->maxHealth) {
 					player->health = player->maxHealth;
 				}
+				player->agility--;
 			}
-			else {
+			else 
+			{
+				std::cout << "No tienes pociones disponibles o movimientos." << std::endl;
+			} 
 				
-			}
+			
 		}
 		else {
 			std::cout << "This action is not valid, please try again.";
