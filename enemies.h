@@ -11,6 +11,7 @@ struct Enemy {
 	MapPosition mapPosition;
 	bool isDead;
 	int health;
+	int maxHealth;
 	int stamina;
 	int maxStamina;
 
