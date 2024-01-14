@@ -34,9 +34,19 @@ int main() {
 
 	} while (!mn->gameFinished);
 
-	void Dungeon(MainManager * mn);
-	void Combat(MainManager * mn);
-	void Chest(MainManager * mn);
-	void GameOver(MainManager * mn);
+
+
+}
+
+void Dungeon(MainManager* mn) {
+
+}
+void Combat(MainManager* mn) {
+
+}
+void Chest(MainManager* mn) {
+
+}
+void GameOver(MainManager* mn) {
 
 }
