@@ -234,10 +234,125 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 
 	switch (respuesta)
 	{
+		int dmg;
+		int dmgEnemy;
+		bool defend; 
+		bool rest;
+		bool attack;
 	case 'A':
+		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
+		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
+		attack = (defend = false) && (rest = false);
+		while (dmg <= player->stamina)
+		{
+			std::cout << "Select the amount of stamina to attack,MAX("<< player->stamina << "): " << std::endl;
+			std::cin >> dmg;
+			if (dmg > player->stamina)
+			{
+				std::cout << "You don't have that much stamina, try again." << std::endl;
+			}
+		}
+
+		if (defend)
+		{
+			enemies[id]->health -= dmg *0.25f;
+			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
+			player->stamina -= dmg;
+
+		}
+		else if (rest)
+		{
+			enemies[id]->health -= dmg;
+			enemies[id]->stamina = enemies[id]->maxStamina;
+			player->stamina -= dmg;
+		}
+		else if (attack)
+		{
+			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
+				if (dmg>=dmgEnemy)
+				{
+					enemies[id]->health -= dmg;
+					enemies[id]->stamina -= dmgEnemy;
+					player->stamina -= dmg;
+				}
+				else if (dmgEnemy<dmg)
+				{
+					enemies[id]->stamina -= dmgEnemy;
+					player->health -= dmgEnemy;
+					player->stamina -= dmg;
+				}
+				
+		}
+		
+			
+		
 
 		break;
 
+	case'D':
+		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
+		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
+		attack = (defend = false) && (rest = false);
+		if (defend)
+		{
+			
+			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
+			player->stamina += player->maxStamina * 0.25f;
+		}
+		else if (rest)
+		{
+			
+			enemies[id]->stamina = enemies[id]->maxStamina;
+			player->stamina += player->maxStamina * 0.25f;
+		}
+		else if (attack)
+		{
+			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
+			enemies[id]->stamina -= dmgEnemy;
+			player->health -= dmgEnemy * 0.25f;
+			player->stamina += player->maxStamina * 0.25f;
+		}
+
+		break;
+	case'R':
+		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
+		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
+		attack = (defend = false) && (rest = false);
+		if (defend)
+		{
+
+			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
+			player->stamina = player->maxStamina;
+		}
+		else if (rest)
+		{
+
+			enemies[id]->stamina = enemies[id]->maxStamina;
+			player->stamina = player->maxStamina;
+		}
+		else if (attack)
+		{
+			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
+			enemies[id]->stamina -= dmgEnemy;
+			player->health -= dmgEnemy * 0.25f;
+			player->stamina += player->maxStamina * 0.25f;
+		}
+
+
+		break;
+	case'P':
+		if (player->potions > 0)
+		{
+			player->potions--;
+			player->health += player->maxHealth * 0.4f;
+			if (player->health >player->maxHealth)
+			{
+				player->health = player->maxHealth;
+			}
+			std::cout << "Has usado una poción!" << std::endl;
+		}
+
+		break;
 	default:
 		std::cout << "This action is not valid or doesn't exist." << std::endl;
 		break;
