@@ -39,7 +39,7 @@ int main() {
 
 
 }	void Dungeon(MainManager* mn, Player* player, std::vector<Enemy*> enemies) {
-
+	system("cls");
 	char respuesta;
 	std::cout << "------ DUNGEON ------" << std::endl;
 
@@ -73,7 +73,7 @@ int main() {
 	std::cout << "P -> Potion" << std::endl;
 
 	std::cout << " " << std::endl;
-	std::cout << "P -> Potion" << std::endl;
+	
 
 	std::cout << "Enter your action: " << std::endl;
 	std::cin >> respuesta;
@@ -81,7 +81,7 @@ int main() {
 	int id;
 	if (player->agility = 0)
 	{
-		mn->MoveEnemies();
+		//mn->MoveEnemies();
 		player->agility = player->maxAgility;
 	}
 	else if ((respuesta == 'W' || respuesta == 'w') && player->agility > 0 && player->mapPosition.y > 0) {
@@ -151,6 +151,7 @@ int main() {
 };
 
 void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& id) {
+	char respuesta;
 	std::cout << "------- COMBAT------" << std::endl;
 	std::cout << "-- Enemy --" << std::endl;
 	std::cout << "[";
@@ -177,7 +178,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 	for (int i = 0; i < 10; i++)
 	{
 
-		if (enemies[1]->stamina >= porcentaje) {
+		if (enemies[id]->stamina >= porcentaje) {
 			std::cout << ">";
 		}
 		else {
@@ -189,13 +190,13 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 	std::cout << "--------------------------" << std::endl;
 	std::cout << "-- Player --" << std::endl;
 	std::cout << "[";
-	aux = enemies[id]->maxHealth * 0.1f;
+	aux = player->maxHealth * 0.1f;
 	porcentaje = aux;
 
 	for (int i = 0; i < 10; i++)
 	{
 
-		if (enemies[id]->health >= porcentaje) {
+		if (player->health >= porcentaje) {
 			std::cout << "=";
 		}
 		else {
@@ -207,12 +208,12 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 
 	std::cout << "[";
 
-	aux = enemies[id]->maxStamina * 0.1f;
+	aux = player->maxStamina * 0.1f;
 	porcentaje = aux;
 	for (int i = 0; i < 10; i++)
 	{
 
-		if (enemies[id]->stamina >= porcentaje) {
+		if (player->stamina >= porcentaje) {
 			std::cout << ">";
 		}
 		else {
@@ -222,7 +223,26 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 	}
 	std::cout << "]" << player->stamina << "/" << player->maxStamina << "Stamina" << std::endl;
 	std::cout << "Potions " << player->potions << "/" << player->maxPotions << std::endl;
+	std::cout << "------------------------";
+	std::cout << "A -> Attack" << std::endl;
+	std::cout << "D -> Defend" << std::endl;
+	std::cout << "R -> Rest" << std::endl;
+	std::cout << "P -> Potion" << std::endl;
+	std::cout << "Enter your action: " << std::endl;
+	std::cin >> respuesta;
+	std::cout << std::endl;
 
+	switch (respuesta)
+	{
+	case 'A':
+
+		break;
+
+	default:
+		std::cout << "This action is not valid or doesn't exist." << std::endl;
+		break;
+	}
+	
 
 }
 void Chest(MainManager* mn){}
