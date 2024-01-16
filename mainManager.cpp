@@ -9,18 +9,18 @@ void MainManager::Spawn() {
 	player = new Player();
 	player->Spawn();
 
-	Gear list[10];
+	std::vector<Gear> gearList;
 
-	list[0] = Gear("Richard’s Hatred", 200, 20, 40, 1);
-	list[1] = Gear("Swift boots", 10, -10, -5, 1);
-	list[2] = Gear("White Powder", 150, -20, 20, 1);
-	list[3] = Gear("Radev’s Mug", -300, -20, -40, -1);
-	list[4] = Gear("Raven feather", 50, -10, 0, 2);
-	list[5] = Gear("Red Mushroom", 170, 30, 0, 0);
-	list[6] = Gear("Ugly Facemask", 10, 5, 0, 0);
-	list[7] = Gear("Broken Shield", 25, 10, 0, 0);
-	list[8] = Gear("Green mushroom", -50, 0, -10, 0);
-	list[9] = Gear("Naughty book", 69, 0, 7, 0);
+	gearList.push_back(Gear("Richard’s Hatred", 200, 20, 40, 1));
+	gearList.push_back(Gear("Swift boots", 10, -10, -5, 1));
+	gearList.push_back(Gear("White Powder", 150, -20, 20, 1));
+	gearList.push_back(Gear("Radev’s Mug", -300, -20, -40, -1));
+	gearList.push_back(Gear("Raven feather", 50, -10, 0, 2));
+	gearList.push_back(Gear("Red Mushroom", 170, 30, 0, 0));
+	gearList.push_back(Gear("Ugly Facemask", 10, 5, 0, 0));
+	gearList.push_back(Gear("Broken Shield", 25, 10, 0, 0));
+	gearList.push_back(Gear("Green mushroom", -50, 0, -10, 0));
+	gearList.push_back(Gear("Naughty book", 69, 0, 7, 0));
 
 	int numEnemies = 5 + rand() % (7 + 1 - 5);
 	for (int i = 0; i < numEnemies; i++)
@@ -39,7 +39,7 @@ void MainManager::Spawn() {
 	{
 		Chest* c = new Chest;
 		c->Spawn(player, enemies, chests);
-		c->gear = list[rand() % 10]; //TO-DO make random gear
+		c->gear = gearList[rand() % gearList.size()];
 		map[c->mapPosition.x][c->mapPosition.y] = 'C';
 		chests.push_back(c);
 	}

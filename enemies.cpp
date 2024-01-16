@@ -33,7 +33,8 @@ void Enemy::Spawn(Player* p, std::vector<Enemy*> enemies) {
 	mapPosition.y = y;
 
 	isDead = false;
-	health = 90 + rand() % (110 + 1 - 90);
+	maxHealth = 90 + rand() % (110 + 1 - 90);
+	health = maxHealth;
 	maxStamina = 60 + rand() % (90 + 1 - 60);
 	stamina = maxStamina;
 

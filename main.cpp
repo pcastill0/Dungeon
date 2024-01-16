@@ -7,8 +7,8 @@
 #include <time.h>
 
 void Dungeon(MainManager* mn, Player* player, std::vector<Enemy*> enemies);
-void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& id);
-void DoChest(MainManager* mn);
+void Combat(MainManager* mn, Player* player, std::vector<Enemy*>& enemies, int& id);
+void DoChest(MainManager* mn, Player* player, std::vector<Chest*>& chests, int& id);
 void GameOver(MainManager* mn);
 void changeStatus(MainManager* mn, Player* player, std::vector<Enemy*> enemies);
 
@@ -28,8 +28,12 @@ int main() {
 			Combat(mn, mn->player, mn->enemies, mn->idCombatEnemy);
 			break;
 		case CHEST:
+			DoChest(mn, mn->player, mn->chests, mn->idChest);
 			break;
 		case GAMEOVER:
+			GameOver(mn);
+			break;
+		case END:
 			break;
 		default:
 			break;
@@ -158,13 +162,20 @@ void changeStatus(MainManager* mn, Player* player, std::vector<Enemy*> enemies) 
 	}
 	else if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'C')
 	{
+		for (int i = 0; i < mn->chests.size(); i++)
+		{
+			if (mn->chests[i]->mapPosition.x == player->mapPosition.x && mn->chests[i]->mapPosition.y == player->mapPosition.y) {
+				mn->idChest = i;
+			}
+		}
+		
 		mn->currentScene = CHEST;
 	}
 
 	mn->map[player->mapPosition.x][player->mapPosition.y] = 'P';
 }
 
-void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& id) {
+void Combat(MainManager* mn, Player* player, std::vector<Enemy*>& enemies, int& id) {
 	char respuesta;
 	std::cout << "------- COMBAT------" << std::endl;
 	std::cout << "-- Enemy --" << std::endl;
@@ -275,7 +286,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
 			player->stamina -= dmg;
 			std::cout << "The enemy defended from your attack. He received 25% from your damage." << std::endl;
-			
+
 
 		}
 		else if (rest)
@@ -285,31 +296,31 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			player->stamina -= dmg;
 			std::cout << "The enemy took a rest to recover energies, he receives your attack." << std::endl;
 		}
-		else 
+		else
 		{
 			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
-				if (dmg>=dmgEnemy)
-				{
-					enemies[id]->health -= dmg;
-					enemies[id]->stamina -= dmgEnemy;
-					player->stamina -= dmg;
-					std::cout << "You struck harder than the enemy, he receives your attack." << std::endl;
+			if (dmg >= dmgEnemy)
+			{
+				enemies[id]->health -= dmg;
+				enemies[id]->stamina -= dmgEnemy;
+				player->stamina -= dmg;
+				std::cout << "You struck harder than the enemy, he receives your attack." << std::endl;
 
-				}
-				else if (dmgEnemy<dmg)
-				{
-					enemies[id]->stamina -= dmgEnemy;
-					player->health -= dmgEnemy;
-					player->stamina -= dmg;
-					std::cout << "The enemy strikes harder than you, you receive damage." << std::endl;
-				}
-				
+			}
+			else if (dmgEnemy > dmg)
+			{
+				enemies[id]->stamina -= dmgEnemy;
+				player->health -= dmgEnemy;
+				player->stamina -= dmg;
+				std::cout << "The enemy strikes harder than you, you receive damage." << std::endl;
+			}
+
 		}
 
 		if (enemies[id]->health <= 0)
 		{
 			std::cout << "You win, the enemy dies." << std::endl;
-			mn->map[enemies[id]->mapPosition.x][enemies[id]->mapPosition.y] = '=';
+			mn->map[enemies[id]->mapPosition.x][enemies[id]->mapPosition.y] = 'P';
 			enemies.erase(enemies.begin() + id);
 			mn->currentScene = DUNGEON;
 
@@ -319,7 +330,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			std::cout << "You died, the enemy won. " << std::endl;
 			mn->currentScene = GAMEOVER;
 		}
-		
+
 		break;
 
 	case'D':
@@ -334,6 +345,11 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		{
 			enemies[id]->stamina = enemies[id]->maxStamina;
 			player->stamina += player->maxStamina * 0.25f;
+
+			if (player->stamina > player->maxStamina)
+			{
+				player->stamina = player->maxStamina;
+			}
 		}
 		else
 		{
@@ -341,6 +357,11 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			enemies[id]->stamina -= dmgEnemy;
 			player->health -= dmgEnemy * 0.25f;
 			player->stamina += player->maxStamina * 0.25f;
+
+			if (player->stamina > player->maxStamina)
+			{
+				player->stamina = player->maxStamina;
+			}
 		}
 
 		if (player->health <= 0)
@@ -367,8 +388,8 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		{
 			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
 			enemies[id]->stamina -= dmgEnemy;
-			player->health -= dmgEnemy * 0.25f;
-			player->stamina += player->maxStamina * 0.25f;
+			player->health -= dmgEnemy;
+			player->stamina = player->maxStamina;
 		}
 
 		if (player->health <= 0)
@@ -398,10 +419,61 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		break;
 	}
 
+	system("pause");
+
 	if (enemies.size() == 0) {
 		mn->currentScene = GAMEOVER;
 	}
 }
 
-void DoChest(MainManager* mn) {}
-void GameOver(MainManager* mn) {}
+void DoChest(MainManager* mn, Player* player, std::vector<Chest*>& chests, int& id) {
+	std::cout << " ------ CHEST --------" << std::endl;
+	std::cout << "> You open the chest and it contains the following:" << std::endl;
+	std::cout << "> " << chests[id]->gold << " gold!" << std::endl;
+	std::cout << "> The chest conatins gear!" << std::endl;
+	std::cout << "> "<< chests[id]->gear.name << std::endl;
+
+	if (chests[id]->containsPotion == true) {
+		if (player->maxPotions == player->potions)
+		{
+			std::cout << "> You already have max potions!" << std::endl;
+		}
+		else {
+			std::cout << "> You acquired a potion!" << std::endl;
+			player->potions++;
+		}
+	}
+
+	std::cout << "-------------------------------------------" << std::endl;
+
+	player->gold += chests[id]->gold;
+
+	player->maxHealth += chests[id]->gear.healt;
+	player->health = player->maxHealth;
+	player->gold += chests[id]->gear.gold;
+	player->maxStamina += chests[id]->gear.stamina;
+	player->stamina = player->maxStamina;
+	player->maxAgility += chests[id]->gear.agility;
+	player->agility = player->maxAgility;
+
+	chests[id]->isLooted = true;
+	chests.erase(chests.begin() + id);
+
+	mn->currentScene = DUNGEON;
+	system("pause");
+
+}
+
+void GameOver(MainManager* mn) {
+	std::cout << " ------ GAME OVER --------" << std::endl;
+
+	if (mn->player->health <= 0) {
+		std::cout << "You LOST! Radev's laughing right now. Your final score is: " << mn->player->gold << std::endl;
+	} else {
+		std::cout << "You WON! Radev's minios are no more. Your final score is: " << mn->player->gold << std::endl;
+	}
+	std::cout << "Thanks for playing :)" << std::endl;
+	mn->currentScene = END;
+	system("pause");
+	//system("cls");
+}

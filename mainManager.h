@@ -5,7 +5,7 @@
 #include <vector>
 
 
-enum Scene { DUNGEON, COMBAT, CHEST, GAMEOVER };
+enum Scene { DUNGEON, COMBAT, CHEST, GAMEOVER, END };
 
 struct MainManager {
 
@@ -22,6 +22,8 @@ struct MainManager {
 	std::vector<Chest*> chests;
 
 	int idCombatEnemy;
+
+	int idChest;
 
 	void Spawn();
 
