@@ -15,6 +15,7 @@ int main() {
 	srand(time(NULL));
 	MainManager* mn = new MainManager;
 	mn->Spawn();
+	int numEnemies = mn->enemies.size();
 
 
 	do {
@@ -52,19 +53,19 @@ int main() {
 	std::cout << "" << std::endl;
 	std::cout << " ___  ___  ___  ___  ___" << std::endl;
 	std::cout << "|   " << "||   " << "||   " << "||   " << "||   " << "|" << std::endl;
-	std::cout << "| " << mn->map[0][0] << " || " << mn->map[0][1] << " || " << mn->map[0][2] << " || " << mn->map[0][3] << " || " << mn->map[0][4] << " |" << std::endl;
+	std::cout << "| " << mn->map[0][0] << " || " << mn->map[1][0] << " || " << mn->map[2][0] << " || " << mn->map[3][0] << " || " << mn->map[4][0] << " |" << std::endl;
 	std::cout << "|___" << "||___" << "||___" << "||___" << "||___" << "|" << std::endl;
 	std::cout << "|   " << "||   " << "||   " << "||   " << "||   " << "|" << std::endl;
-	std::cout << "| " << mn->map[1][0] << " || " << mn->map[1][1] << " || " << mn->map[1][2] << " || " << mn->map[1][3] << " || " << mn->map[1][4] << " |" << std::endl;
+	std::cout << "| " << mn->map[0][1] << " || " << mn->map[1][1] << " || " << mn->map[2][1] << " || " << mn->map[3][1] << " || " << mn->map[4][1] << " |" << std::endl;
 	std::cout << "|___" << "||___" << "||___" << "||___" << "||___" << "|" << std::endl;
 	std::cout << "|   " << "||   " << "||   " << "||   " << "||   " << "|" << std::endl;
-	std::cout << "| " << mn->map[2][0] << " || " << mn->map[2][1] << " || " << mn->map[2][2] << " || " << mn->map[2][3] << " || " << mn->map[2][4] << " |" << std::endl;
+	std::cout << "| " << mn->map[0][2] << " || " << mn->map[1][2] << " || " << mn->map[2][2] << " || " << mn->map[3][2] << " || " << mn->map[4][2] << " |" << std::endl;
 	std::cout << "|___" << "||___" << "||___" << "||___" << "||___" << "|" << std::endl;
 	std::cout << "|   " << "||   " << "||   " << "||   " << "||   " << "|" << std::endl;
-	std::cout << "| " << mn->map[3][0] << " || " << mn->map[3][1] << " || " << mn->map[3][2] << " || " << mn->map[3][3] << " || " << mn->map[3][4] << " |" << std::endl;
+	std::cout << "| " << mn->map[0][3] << " || " << mn->map[1][3] << " || " << mn->map[2][3] << " || " << mn->map[3][3] << " || " << mn->map[4][3] << " |" << std::endl;
 	std::cout << "|___" << "||___" << "||___" << "||___" << "||___" << "|" << std::endl;
 	std::cout << "|   " << "||   " << "||   " << "||   " << "||   " << "|" << std::endl;
-	std::cout << "| " << mn->map[4][0] << " || " << mn->map[4][1] << " || " << mn->map[4][2] << " || " << mn->map[4][3] << " || " << mn->map[4][4] << " |" << std::endl;
+	std::cout << "| " << mn->map[0][4] << " || " << mn->map[1][4] << " || " << mn->map[2][4] << " || " << mn->map[3][4] << " || " << mn->map[4][4] << " |" << std::endl;
 	std::cout << "|___" << "||___" << "||___" << "||___" << "||___" << "|" << std::endl;
 	std::cout << "_______________________" << std::endl;
 
@@ -79,7 +80,7 @@ int main() {
 	std::cin >> respuesta;
 	std::cout << std::endl;
 	int id;
-	if (player->agility = 0)
+	if (player->agility == 0)
 	{
 		//mn->MoveEnemies();
 		player->agility = player->maxAgility;
@@ -111,6 +112,23 @@ int main() {
 
 		player->mapPosition.x--;
 		player->agility--;
+		if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'E')
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if (enemies[i]->mapPosition.x && enemies[i]->mapPosition.y == player->mapPosition.x && player->mapPosition.y) {
+					id = i;
+
+				}
+			}
+
+
+			mn->currentScene = COMBAT;
+		}
+		else if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'C')
+		{
+			mn->currentScene = CHEST;
+		}
 
 
 	}
@@ -118,13 +136,45 @@ int main() {
 
 		player->mapPosition.y++;
 		player->agility--;
+		if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'E')
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if (enemies[i]->mapPosition.x && enemies[i]->mapPosition.y == player->mapPosition.x && player->mapPosition.y) {
+					id = i;
 
+				}
+			}
+
+
+			mn->currentScene = COMBAT;
+		}
+		else if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'C')
+		{
+			mn->currentScene = CHEST;
+		}
 	}
 	else if ((respuesta == 'D' || respuesta == 'd') && player->agility > 0 && player->mapPosition.x < 4) {
 
 		player->mapPosition.x++;
 		player->agility--;
+		if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'E')
+		{
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if (enemies[i]->mapPosition.x && enemies[i]->mapPosition.y == player->mapPosition.x && player->mapPosition.y) {
+					id = i;
 
+				}
+			}
+
+
+			mn->currentScene = COMBAT;
+		}
+		else if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'C')
+		{
+			mn->currentScene = CHEST;
+		}
 	}
 	else if (respuesta == 'P' || respuesta == 'p') {
 		if (player->agility < 0 && player->potions > 0) {
@@ -243,21 +293,27 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
 		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
 		attack = (defend = false) && (rest = false);
-		while (dmg <= player->stamina)
+		do
 		{
-			std::cout << "Select the amount of stamina to attack,MAX("<< player->stamina << "): " << std::endl;
+
+			std::cout << "Select the amount of stamina to attack,MAX(" << player->stamina << "): " << std::endl;
 			std::cin >> dmg;
 			if (dmg > player->stamina)
 			{
 				std::cout << "You don't have that much stamina, try again." << std::endl;
 			}
-		}
+		} while (dmg <= player->stamina);
+		
+		
+		
 
 		if (defend)
 		{
 			enemies[id]->health -= dmg *0.25f;
 			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
 			player->stamina -= dmg;
+			std::cout << "The enemy defended from your attack. He received 25% from your damage." << std::endl;
+			
 
 		}
 		else if (rest)
@@ -265,6 +321,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			enemies[id]->health -= dmg;
 			enemies[id]->stamina = enemies[id]->maxStamina;
 			player->stamina -= dmg;
+			std::cout << "The enemy took a rest to recover energies, he receives your attack." << std::endl;
 		}
 		else if (attack)
 		{
@@ -274,17 +331,32 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 					enemies[id]->health -= dmg;
 					enemies[id]->stamina -= dmgEnemy;
 					player->stamina -= dmg;
+					std::cout << "You struck harder than the enemy, he receives your attack." << std::endl;
+
 				}
 				else if (dmgEnemy<dmg)
 				{
 					enemies[id]->stamina -= dmgEnemy;
 					player->health -= dmgEnemy;
 					player->stamina -= dmg;
+					std::cout << "The enemy strikes harder than you, you receive damage." << std::endl;
 				}
 				
 		}
+		if (enemies[id]->health >= 0)
+		{
+			std::cout << "You win, the enemy dies." << std::endl;
+			mn->map[enemies[id]->mapPosition.x][enemies[id]->mapPosition.y] = '=';
+			enemies.erase(enemies.begin() + id);
+			mn->currentScene = DUNGEON;
+
+		}
+		else if (player->health <= 0)
+		{
+			std::cout << "You died, the enemy won. " << std::endl;
+			mn->currentScene = GAMEOVER;
+		}
 		
-			
 		
 
 		break;
@@ -298,6 +370,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			
 			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
 			player->stamina += player->maxStamina * 0.25f;
+			std::cout << "The enemy defended from your attack. He received 25% from your damage." << std::endl;
 		}
 		else if (rest)
 		{
@@ -311,6 +384,11 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			enemies[id]->stamina -= dmgEnemy;
 			player->health -= dmgEnemy * 0.25f;
 			player->stamina += player->maxStamina * 0.25f;
+		}
+		if (player->health <= 0)
+		{
+			std::cout << "El enemigo te ha quitado toda la vida." << std::endl;
+			mn->currentScene = GAMEOVER;
 		}
 
 		break;
@@ -338,6 +416,11 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			player->stamina += player->maxStamina * 0.25f;
 		}
 
+		if (player->health <= 0)
+		{
+			std::cout << "El enemigo te ha quitado toda la vida." << std::endl;
+			mn->currentScene = GAMEOVER;
+		}
 
 		break;
 	case'P':
