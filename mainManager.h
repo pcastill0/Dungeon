@@ -10,6 +10,7 @@ enum Scene { DUNGEON, COMBAT, CHEST, GAMEOVER };
 struct MainManager {
 
 	Scene currentScene;
+
 	char map[5][5];
 
 	bool gameFinished;

@@ -8,23 +8,22 @@ void Enemy::Spawn(Player* p, std::vector<Enemy*> enemies) {
 	int y;
 
 	do {
+		free = true;
 		x = rand() % 5;
 		y = rand() % 5;
 
 		if (x == p->mapPosition.x && y == p->mapPosition.y)
 		{
 			free = false;
+			continue;
 		}
 
-		if (enemies.size() != 0 && free == true)
+		for (Enemy* enemy : enemies)
 		{
-			for (Enemy* enemy : enemies)
+			if (x == enemy->mapPosition.x && y == enemy->mapPosition.y)
 			{
-
-				if (x == enemy->mapPosition.x && y == enemy->mapPosition.y)
-				{
-					free = false;
-				}
+				free = false;
+				continue;
 			}
 		}
 

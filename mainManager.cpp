@@ -27,12 +27,8 @@ void MainManager::Spawn() {
 	{
 		Enemy* e = new Enemy;
 		e->Spawn(player, enemies);
+		map[e->mapPosition.x][e->mapPosition.y] = 'E';
 		enemies.push_back(e);
-	}
-
- 	for (int i = 0; i < enemies.size(); i++)
-	{
-		map[enemies[i]->mapPosition.x][enemies[i]->mapPosition.y] = 'E' ;
 	}
 
 	map[player->mapPosition.x][player->mapPosition.y] = 'P';
@@ -50,7 +46,48 @@ void MainManager::Spawn() {
 
 }
 
-void MainManager::MoveEnemies() {}
+void MainManager::MoveEnemies() {
+	player->agility = player->maxAgility;
+
+	bool free = true;
+
+	int x;
+	int y;
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		do {
+			free = true;
+			x = rand() % 5;
+			y = rand() % 5;
+
+			if (x == player->mapPosition.x && y == player->mapPosition.y)
+			{
+				free = false;
+			}
+
+			if (enemies.size() != 0 && free == true)
+			{
+				for (Enemy* enemy : enemies)
+				{
+
+					if (x == enemy->mapPosition.x && y == enemy->mapPosition.y)
+					{
+						free = false;
+					}
+				}
+			}
+
+		} while (!free);
+
+		map[enemies[i]->mapPosition.x][enemies[i]->mapPosition.y] = '=';
+
+		enemies[i]->mapPosition.x = x;
+		enemies[i]->mapPosition.y = y;
+		
+		map[x][y] = 'E';
+	}
+}
 
 /*
 Gear* getGearlist() {

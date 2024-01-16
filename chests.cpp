@@ -9,6 +9,7 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 	int y;
 
 	do {
+		free = true;
 		x = rand() % 5;
 		y = rand() % 5;
 
