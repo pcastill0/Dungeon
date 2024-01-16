@@ -15,5 +15,5 @@ struct Chest {
 	Gear gear;
 	bool containsPotion;
 
-	//void Spawn(Player* p, std::vector<Enemy* > enemies, std::vector<Chest* > chests);
+	void Spawn(Player* p, std::vector<Enemy*> enemies, std::vector< Chest* > chests);
 };

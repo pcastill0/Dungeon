@@ -1,8 +1,7 @@
 #include "chests.h"
 
-/*
-void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& chests) {
-
+void Chest::Spawn(Player* p, std::vector<Enemy*> enemies, std::vector<Chest*> chests)
+{
 	bool free = true;
 
 	int x;
@@ -16,9 +15,10 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 		if (x == p->mapPosition.x && y == p->mapPosition.y)
 		{
 			free = false;
+			continue;
 		}
 
-		if (enemies.size() != 0 && free == true)
+		if (enemies.size() != 0)
 		{
 			for (Enemy* enemy : enemies)
 			{
@@ -26,11 +26,12 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 				if (x == enemy->mapPosition.x && y == enemy->mapPosition.y)
 				{
 					free = false;
+					continue;
 				}
 			}
 		}
 
-		if (chests.size() != 0 && free == true)
+		if (chests.size() != 0)
 		{
 			for (Chest* chest : chests)
 			{
@@ -38,6 +39,7 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 				if (x == chest->mapPosition.x && y == chest->mapPosition.y)
 				{
 					free = false;
+					continue;
 				}
 			}
 		}
@@ -49,7 +51,7 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 
 	gold = 50 + rand() % (200 + 1 - 50);
 	isLooted = false;
-	
+
 	int randPotion = rand() % 100;
 	if (randPotion >= 25)
 	{
@@ -58,5 +60,4 @@ void Chest::Spawn(Player* p, std::vector<Enemy> enemies, std::vector<Chest*>& ch
 	else {
 		containsPotion = true;
 	}
-	
-}*/
+}

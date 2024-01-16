@@ -109,9 +109,6 @@ void Dungeon(MainManager* mn, Player* player, std::vector<Enemy*> enemies) {
 		mn->map[player->mapPosition.x][player->mapPosition.y] = '=';
 		player->mapPosition.x--;
 		changeStatus(mn, mn->player, mn->enemies);
-				}
-			}
-
 	}
 	else if ((respuesta == 'S' || respuesta == 's') && player->agility > 0 && player->mapPosition.y > 0) {
 		mn->map[player->mapPosition.x][player->mapPosition.y] = '=';
@@ -123,13 +120,6 @@ void Dungeon(MainManager* mn, Player* player, std::vector<Enemy*> enemies) {
 		mn->map[player->mapPosition.x][player->mapPosition.y] = '=';
 		player->mapPosition.x++;
 		changeStatus(mn, mn->player, mn->enemies);
-
-			mn->currentScene = COMBAT;
-		}
-		else if (mn->map[player->mapPosition.x][player->mapPosition.y] == 'C')
-		{
-			mn->currentScene = CHEST;
-		}
 	}
 	else if (respuesta == 'P' || respuesta == 'p') {
 		if (player->agility < 0 && player->potions > 0) {
@@ -256,17 +246,19 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 	std::cin >> respuesta;
 	std::cout << std::endl;
 
+	int dmg;
+	int dmgEnemy;
+	bool defend;
+	bool rest;
+	bool attack;
+	defend = enemies[id]->health < enemies[id]->maxHealth * 0.3f && enemies[id]->stamina < enemies[id]->maxStamina * 0.3f;
+	rest = enemies[id]->stamina < enemies[id]->maxStamina * 0.2f;
+
 	switch (respuesta)
 	{
-		int dmg;
-		int dmgEnemy;
-		bool defend;
-		bool rest;
-		bool attack;
+
 	case 'A':
-		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
-		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
-		attack = (defend = false) && (rest = false);
+
 
 		do {
 			std::cout << "Select the amount of stamina to attack, MAX(" << player->stamina << "): " << std::endl;
@@ -293,7 +285,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			player->stamina -= dmg;
 			std::cout << "The enemy took a rest to recover energies, he receives your attack." << std::endl;
 		}
-		else if (attack)
+		else 
 		{
 			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
 				if (dmg>=dmgEnemy)
@@ -313,7 +305,8 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 				}
 				
 		}
-		if (enemies[id]->health >= 0)
+
+		if (enemies[id]->health <= 0)
 		{
 			std::cout << "You win, the enemy dies." << std::endl;
 			mn->map[enemies[id]->mapPosition.x][enemies[id]->mapPosition.y] = '=';
@@ -327,34 +320,29 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 			mn->currentScene = GAMEOVER;
 		}
 		
-		
-
 		break;
 
 	case'D':
-		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
-		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
-		attack = (defend = false) && (rest = false);
+
 		if (defend)
 		{
-
 			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
 			player->stamina += player->maxStamina * 0.25f;
 			std::cout << "The enemy defended from your attack. He received 25% from your damage." << std::endl;
 		}
 		else if (rest)
 		{
-
 			enemies[id]->stamina = enemies[id]->maxStamina;
 			player->stamina += player->maxStamina * 0.25f;
 		}
-		else if (attack)
+		else
 		{
 			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
 			enemies[id]->stamina -= dmgEnemy;
 			player->health -= dmgEnemy * 0.25f;
 			player->stamina += player->maxStamina * 0.25f;
 		}
+
 		if (player->health <= 0)
 		{
 			std::cout << "El enemigo te ha quitado toda la vida." << std::endl;
@@ -362,23 +350,20 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		}
 
 		break;
+
 	case'R':
-		defend = enemies[id]->health > enemies[id]->health * 0.3f && enemies[id]->stamina > enemies[id]->stamina * 0.3f;
-		rest = enemies[id]->stamina < enemies[id]->stamina * 0.2f;
-		attack = (defend = false) && (rest = false);
+
 		if (defend)
 		{
-
 			enemies[id]->stamina += enemies[id]->maxStamina * 0.25f;
 			player->stamina = player->maxStamina;
 		}
 		else if (rest)
 		{
-
 			enemies[id]->stamina = enemies[id]->maxStamina;
 			player->stamina = player->maxStamina;
 		}
-		else if (attack)
+		else
 		{
 			dmgEnemy = enemies[id]->stamina * 0.2f + rand() % (enemies[id]->stamina) - (enemies[id]->stamina * 0.2f) + 1;
 			enemies[id]->stamina -= dmgEnemy;
@@ -393,6 +378,7 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		}
 
 		break;
+
 	case'P':
 		if (player->potions > 0)
 		{
@@ -406,10 +392,12 @@ void Combat(MainManager* mn, Player* player, std::vector<Enemy*> enemies, int& i
 		}
 
 		break;
+
 	default:
 		std::cout << "This action is not valid or doesn't exist." << std::endl;
 		break;
 	}
+
 	if (enemies.size() == 0) {
 		mn->currentScene = GAMEOVER;
 	}
