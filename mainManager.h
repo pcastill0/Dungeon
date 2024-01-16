@@ -20,6 +20,8 @@ struct MainManager {
 
 	std::vector<Chest*> chests;
 
+	int idCombatEnemy;
+
 	void Spawn();
 
 	void MoveEnemies();

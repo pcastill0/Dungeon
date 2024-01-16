@@ -30,6 +30,13 @@ void MainManager::Spawn() {
 		enemies.push_back(e);
 	}
 
+ 	for (int i = 0; i < enemies.size(); i++)
+	{
+		map[enemies[i]->mapPosition.x][enemies[i]->mapPosition.y] = 'E' ;
+	}
+
+	map[player->mapPosition.x][player->mapPosition.y] = 'P';
+
 	/*
 	int numChests = 2;
 	for (int i = 0; i < numChests; i++)
@@ -42,6 +49,8 @@ void MainManager::Spawn() {
 
 
 }
+
+void MainManager::MoveEnemies() {}
 
 /*
 Gear* getGearlist() {

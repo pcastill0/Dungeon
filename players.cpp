@@ -6,9 +6,10 @@ void Player::Spawn() {
 
 	cout << "Introduce nombre: ";
 	cin >> name;
+	//std::getline(std::cin, name);
 
 	mapPosition.x = 2;
-	mapPosition.y = 3;
+	mapPosition.y = 1;
 
 	gold = 0;
 
